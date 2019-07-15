@@ -1,4 +1,8 @@
 //
+// Created by shengym on 2019-07-13.
+//
+
+//
 // Created by shengym on 2019-07-07.
 //
 
@@ -26,25 +30,44 @@ int main(int argc, char **argv) {
 
     socklen_t client_len;
     char message[MAXLINE];
+    message[0] = 0;
     count = 0;
 
     signal(SIGINT, recvfrom_int);
 
     struct sockaddr_in client_addr;
     client_len = sizeof(client_addr);
-    for (;;) {
-        int n = recvfrom(socket_fd, message, MAXLINE, 0, (struct sockaddr *) &client_addr, &client_len);
-        message[n] = 0;
-        printf("received %d bytes: %s\n", n, message);
 
+    int n = recvfrom(socket_fd, message, MAXLINE, 0, (struct sockaddr *) &client_addr, &client_len);
+    if (n < 0) {
+        error(1, errno, "recvfrom failed");
+    }
+    message[n] = 0;
+    printf("received %d bytes: %s\n", n, message);
+
+    if (connect(socket_fd, (struct sockaddr *) &client_addr, client_len)) {
+        error(1, errno, "connect failed");
+    }
+
+    while (strncmp(message, "goodbye", 7) != 0) {
         char send_line[MAXLINE];
         sprintf(send_line, "Hi, %s", message);
 
-        sendto(socket_fd, send_line, strlen(send_line), 0, (struct sockaddr *) &client_addr, client_len);
+        size_t rt = send(socket_fd, send_line, strlen(send_line), 0);
+        if (rt < 0) {
+            error(1, errno, "send failed ");
+        }
+        printf("send bytes: %zu \n", rt);
+
+        size_t rc = recv(socket_fd, message, MAXLINE, 0);
+        if (rc < 0) {
+            error(1, errno, "recv failed");
+        }
 
         count++;
     }
 
+    exit(0);
 }
 
 

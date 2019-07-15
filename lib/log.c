@@ -10,6 +10,20 @@
 # define MAXLINE 4096
 
 
+/* error - print a diagnostic and optionally exit */
+void error(int status, int err, char *fmt, ...) {
+    va_list ap;
+
+    va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    va_end(ap);
+    if (err)
+        fprintf(stderr, ": %s (%d)\n", strerror(err), err);
+    if (status)
+        exit(status);
+}
+
+
 static void
 err_doit(int errnoflag, int level, const char *fmt, va_list ap) {
     int errno_save, n;
@@ -17,7 +31,7 @@ err_doit(int errnoflag, int level, const char *fmt, va_list ap) {
 
     errno_save = errno;        /* value caller might want printed */
 
-    vsnprintf(buf, MAXLINE, fmt, ap);	/* safe */
+    vsnprintf(buf, MAXLINE, fmt, ap);    /* safe */
 
     n = strlen(buf);
     if (errnoflag)
@@ -32,13 +46,13 @@ err_doit(int errnoflag, int level, const char *fmt, va_list ap) {
     return;
 }
 
-void
-err_quit(const char *fmt, ...) {
-    va_list ap;
-
-    va_start(ap, fmt);
-    err_doit(0, LOG_ERR, fmt, ap);
-    va_end(ap);
-    exit(1);
-}
+//void
+//err_quit(const char *fmt, ...) {
+//    va_list ap;
+//
+//    va_start(ap, fmt);
+//    err_doit(0, LOG_ERR, fmt, ap);
+//    va_end(ap);
+//    exit(1);
+//}
 
