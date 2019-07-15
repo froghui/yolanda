@@ -29,10 +29,7 @@
 # include    <poll.h>        /* for convenience */
 # include    <strings.h>        /* for convenience */
 # include    <sys/ioctl.h>
-# include    <sys/filio.h>
-# include    <sys/sockio.h>
 # include    <pthread.h>
-# include    <net/if_dl.h>
 
 
 void err_dump(const char *, ...);
@@ -45,10 +42,14 @@ void err_ret(const char *, ...);
 
 void err_sys(const char *, ...);
 
+void error(int status, int err, char *fmt, ...);
 
 char *sock_ntop(const struct sockaddr_in *sin, socklen_t salen);
 
-# define SERV_PORT  9527
-# define MAXLINE    4096
+#define    SERV_PORT      9527
+#define    MAXLINE        4096
+#define    UNIXSTR_PATH   "/var/lib/unixstream.sock"
+#define    LISTENQ        1024
+#define    BUFFER_SIZE    4096
 
 #endif //YOLANDA_COMMON_H
