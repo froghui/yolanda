@@ -12,7 +12,7 @@
 
 int main(int argc, char **argv) {
     if (argc != 2) {
-        error(1, 0, "usage: udpclient3 <IPaddress>");
+        error(1, 0, "usage: udpclient2 <IPaddress>");
     }
 
     int socket_fd;
@@ -45,14 +45,6 @@ int main(int argc, char **argv) {
             error(1, errno, "send failed ");
         }
         printf("send bytes: %zu \n", rt);
-
-
-//        printf("now sending %s\n", send_line);
-//        size_t rt = sendto(socket_fd, send_line, strlen(send_line), 0, (struct sockaddr *) &server_addr, server_len);
-//        if (rt < 0) {
-//            error(1, errno, "sendto failed");
-//        }
-//        printf("send bytes: %zu \n", rt);
 
         recv_line[0] = 0;
         n = recv(socket_fd, recv_line, MAXLINE, 0);
