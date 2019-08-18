@@ -1,6 +1,9 @@
 set(yolanda_lib
         log.c
         sock_ntop.c
+        read.c
+        tcp_server.c
+        tcp_client.c
         )
 
 add_library(yolanda ${yolanda_lib})

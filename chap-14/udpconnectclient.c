@@ -1,18 +1,13 @@
 //
 // Created by shengym on 2019-07-12.
 //
-
 #include "lib/common.h"
 
-
-# define    NDG         2000    /* datagrams to send */
-# define    DGLEN       1400    /* length of each datagram */
-# define    MAXLINE     4096
-
+#define    MAXLINE     4096
 
 int main(int argc, char **argv) {
     if (argc != 2) {
-        error(1, 0, "usage: udpclient <IPaddress>");
+        error(1, 0, "usage: udpclient1 <IPaddress>");
     }
 
     int socket_fd;
@@ -50,21 +45,6 @@ int main(int argc, char **argv) {
         }
         printf("send bytes: %zu \n", rt);
 
-//        printf("now sending %s\n", send_line);
-//        size_t rt = send(socket_fd, send_line, strlen(send_line), 0);
-//        if (rt < 0) {
-//            error(1, errno, "send failed ");
-//        }
-//        printf("send bytes: %zu \n", rt);
-
-//        size_t rt = write(socket_fd, send_line, strlen(send_line));
-//        if (rt <= 0) {
-//            error(1, errno, "write failed");
-//        }
-//        printf("send bytes: %zu \n", rt);
-
-//        len = 0;
-
         len = 0;
         recv_line[0] = 0;
         n = recvfrom(socket_fd, recv_line, MAXLINE, 0, reply_addr, &len);
@@ -74,12 +54,6 @@ int main(int argc, char **argv) {
         fputs(recv_line, stdout);
         fputs("\n", stdout);
 
-
-//        recv_line[0] = 0;
-//        n = recv(socket_fd, recv_line, MAXLINE, 0);
-//        recv_line[n] = 0;
-//        fputs(recv_line, stdout);
-//        fputs("\n", stdout);
     }
 
     exit(0);
