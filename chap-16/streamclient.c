@@ -29,19 +29,6 @@ int main(int argc, char **argv) {
 
     int n;
 
-//    int n = 65535;
-//    message.message_length = htonl(n);
-//    message.message_type = 1;
-//    char buf[128] = "just for fun\0";
-//    strncpy(message.data, buf, strlen(buf));
-//    if (send(socket_fd, (char *) &message,
-//             sizeof(message.message_length) + sizeof(message.message_type) + strlen(message.data), 0) < 0)
-//        error(1, errno, "send failure");
-//
-//    sleep(100);
-//}
-
-
     while (fgets(message.data, sizeof(message.data), stdin) != NULL) {
         n = strlen(message.data);
         message.message_length = htonl(n);
