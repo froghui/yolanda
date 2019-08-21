@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     socklen_t client_len = sizeof(client_addr);
     while (1) {
         bzero(buf, sizeof(buf));
-        if (recvfrom(socket_fd, buf, BUFFER_SIZE, 0, (struct sockadd *) &client_addr, &client_len) == 0) {
+        if (recvfrom(socket_fd, buf, BUFFER_SIZE, 0, (struct sockaddr *) &client_addr, &client_len) == 0) {
             printf("client quit");
             break;
         }
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         size_t nbytes = strlen(send_line);
         printf("now sending: %s \n", send_line);
 
-        if (sendto(socket_fd, send_line, nbytes, 0, (struct sockadd *) &client_addr, client_len) != nbytes)
+        if (sendto(socket_fd, send_line, nbytes, 0, (struct sockaddr *) &client_addr, client_len) != nbytes)
             error(1, errno, "sendto error");
     }
 
