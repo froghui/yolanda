@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
 
         if (strcmp(buffer, "quit") == 0) {
             printf("client quit\n");
-            send(socket, Response, sizeof(Response), 0);
+            send(connfd, Response, sizeof(Response), 0);
         }
 
         printf("received %d bytes: %s\n", nBytes, buffer);
