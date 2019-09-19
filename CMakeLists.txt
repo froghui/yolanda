@@ -11,6 +11,24 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
+# check epoll and add config.h for the macro compilation
+include(CheckSymbolExists)
+check_symbol_exists(epoll_create "sys/epoll.h" EPOLL_EXISTS)
+if (EPOLL_EXISTS)
+    # Linux下设置为epoll
+    set(EPOLL_ENABLE 1 CACHE INTERNAL "enable epoll")
+
+    # Linux下也设置为poll
+#    set(EPOLL_ENABLE "" CACHE INTERNAL "not enable epoll")
+else ()
+    set(EPOLL_ENABLE "" CACHE INTERNAL "not enable epoll")
+endif ()
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+
 add_subdirectory(lib/)
 add_subdirectory(chap-4/)
 add_subdirectory(chap-5/)
@@ -23,4 +41,15 @@ add_subdirectory(chap-15)
 add_subdirectory(chap-16)
 add_subdirectory(chap-17)
 add_subdirectory(chap-18)
+add_subdirectory(mid-homework)
+add_subdirectory(chap-20)
+add_subdirectory(chap-21)
+add_subdirectory(chap-22)
+add_subdirectory(chap-23)
+add_subdirectory(chap-25)
+add_subdirectory(chap-26)
+add_subdirectory(chap-27)
+add_subdirectory(chap-28)
+add_subdirectory(chap-29)
+add_subdirectory(chap-34)
 

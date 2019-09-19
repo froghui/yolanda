@@ -2,9 +2,10 @@
 
 本工程使用CMake来编译，CMake的好处是方便跨平台执行。关于CMake，可以访问(https://cmake.org/)。
 
-在Linux环境下，请切换到目录build下，执行
+在Linux环境下，请先创建build目录，并到目录build下，执行cmake
 ```bash
-cmake -f ../
+mkdir build && cd build
+cmake ../
 ```
 
 再执行
