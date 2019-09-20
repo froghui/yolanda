@@ -80,8 +80,10 @@ int main(int argc, char **argv) {
             buf[n] = 0;
             if (strncmp(buf, "ls", n) == 0) {
                 char *result = run_cmd("ls");
-                if (send(connfd, result, strlen(result), 0) < 0)
+                if (send(connfd, result, strlen(result), 0) < 0){
                     return 1;
+                }
+                free(result);
             } else if (strncmp(buf, "pwd", n) == 0) {
                 char buf[256];
                 char *result = getcwd(buf, 256);
