@@ -51,5 +51,6 @@ add_subdirectory(chap-26)
 add_subdirectory(chap-27)
 add_subdirectory(chap-28)
 add_subdirectory(chap-29)
+add_subdirectory(chap-30)
 add_subdirectory(chap-34)
 
