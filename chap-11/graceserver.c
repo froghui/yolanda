@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     }
 
     signal(SIGINT, sig_int);
-    signal(SIGPIPE, SIG_IGN);
+    signal(SIGPIPE, SIG_DFL);
 
     int connfd;
     struct sockaddr_in client_addr;

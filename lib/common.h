@@ -5,6 +5,13 @@
 #ifndef YOLANDA_COMMON_H
 #define YOLANDA_COMMON_H
 
+#include "config.h"
+
+#include "log.h"
+#include "tcp_server.h"
+#include "inetaddress.h"
+#include "channel_map.h"
+
 #include    <sys/types.h>    /* basic system data types */
 #include    <sys/socket.h>    /* basic socket definitions */
 #include    <sys/time.h>    /* timeval{} for select() */
@@ -24,12 +31,16 @@
 #include    <sys/wait.h>
 #include    <sys/un.h>        /* for Unix domain sockets */
 
-# include    <sys/select.h>    /* for convenience */
-# include    <sys/sysctl.h>
-# include    <poll.h>        /* for convenience */
-# include    <strings.h>        /* for convenience */
-# include    <sys/ioctl.h>
-# include    <pthread.h>
+#include    <sys/select.h>    /* for convenience */
+#include    <sys/sysctl.h>
+#include    <poll.h>        /* for convenience */
+#include    <strings.h>        /* for convenience */
+#include    <sys/ioctl.h>
+#include    <pthread.h>
+
+#ifdef EPOLL_ENABLE
+#include    <sys/epoll.h>
+#endif
 
 
 void err_dump(const char *, ...);
@@ -54,9 +65,15 @@ size_t readline(int fd, char *buffer, size_t length);
 
 int tcp_server(int port);
 
-int tcp_client(char * address, int port);
+int tcp_server_listen(int port);
 
-#define    SERV_PORT      9527
+int tcp_nonblocking_server_listen(int port);
+
+void make_nonblocking(int fd);
+
+int tcp_client(char *address, int port);
+
+#define    SERV_PORT      43211
 #define    MAXLINE        4096
 #define    UNIXSTR_PATH   "/var/lib/unixstream.sock"
 #define    LISTENQ        1024

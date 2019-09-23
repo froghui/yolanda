@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     }
 
     int socket_fd = tcp_client(argv[1], SERV_PORT);
-    char buf[128];
+    char buf[129];
     int len;
     int rc;
 
