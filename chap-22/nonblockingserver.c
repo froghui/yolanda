@@ -22,6 +22,7 @@ struct Buffer {
 };
 
 
+//分配一个Buffer对象，初始化writeIdnex和readIndex等
 struct Buffer *alloc_Buffer() {
     struct Buffer *buffer = malloc(sizeof(struct Buffer));
     if (!buffer)
@@ -31,11 +32,12 @@ struct Buffer *alloc_Buffer() {
     return buffer;
 }
 
+//释放Buffer对象
 void free_Buffer(struct Buffer *buffer) {
     free(buffer);
 }
 
-
+//这里从fd套接字读取数据，数据先读取到本地buf数组中，再逐个拷贝到buffer对象缓冲中
 int onSocketRead(int fd, struct Buffer *buffer) {
     char buf[1024];
     int i;
@@ -45,9 +47,12 @@ int onSocketRead(int fd, struct Buffer *buffer) {
         if (result <= 0)
             break;
 
+        //按char对每个字节进行拷贝，每个字节都会先调用rot13_char来完成编码，之后拷贝到buffer对象的缓冲中，
+        //其中writeIndex标志了缓冲中写的位置
         for (i = 0; i < result; ++i) {
             if (buffer->writeIndex < sizeof(buffer->buffer))
                 buffer->buffer[buffer->writeIndex++] = rot13_char(buf[i]);
+            //如果读取了回车符，则认为client端发送结束，此时可以把编码后的数据回送给客户端
             if (buf[i] == '\n') {
                 buffer->readable = 1;  //缓冲区可以读
             }
@@ -65,6 +70,7 @@ int onSocketRead(int fd, struct Buffer *buffer) {
     return 0;
 }
 
+//从buffer对象的readIndex开始读，一直读到writeIndex的位置，这段区间是有效数据
 int onSocketWrite(int fd, struct Buffer *buffer) {
     while (buffer->readIndex < buffer->writeIndex) {
         ssize_t result = send(fd, buffer->buffer + buffer->readIndex, buffer->writeIndex - buffer->readIndex, 0);
@@ -77,9 +83,11 @@ int onSocketWrite(int fd, struct Buffer *buffer) {
         buffer->readIndex += result;
     }
 
+    //readindex已经追上writeIndex，说明有效发送区间已经全部读完，将readIndex和writeIndex设置为0，复用这段缓冲
     if (buffer->readIndex == buffer->writeIndex)
         buffer->readIndex = buffer->writeIndex = 0;
 
+    //缓冲数据已经全部读完，不需要再读
     buffer->readable = 0;
 
     return 0;

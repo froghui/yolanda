@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
                 }
 
                 printf("now sending %s\n", send_line);
-                size_t rt = write(socket_fd, send_line, strlen(send_line));
+                ssize_t rt = write(socket_fd, send_line, strlen(send_line));
                 if (rt < 0) {
                     error(1, errno, "write failed ");
                 }
