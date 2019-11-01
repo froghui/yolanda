@@ -112,8 +112,8 @@ int http_onMessage(struct buffer *input, struct tcp_connection *tcpConnection) {
 
         if (http_request_close_connection(httpRequest)) {
             tcp_connection_shutdown(tcpConnection);
-            http_request_reset(httpRequest);
         }
+	http_request_reset(httpRequest);
     }
 }
 
