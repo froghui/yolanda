@@ -75,7 +75,7 @@ tcp_connection_new(int connected_fd, struct event_loop *eventLoop,
     tcpConnection->name = buf;
 
     // add event read for the new connection
-    struct channel *channel1 = channel_new(connected_fd, EVENT_READ, handle_read, handle_write, tcpConnection);
+    struct channel *channel1 = channel_new(connected_fd, EVENT_READ | EVENT_WRITE, handle_read, handle_write, tcpConnection);
     tcpConnection->channel = channel1;
 
     //connectionCompletedCallBack callback
