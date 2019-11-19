@@ -49,7 +49,7 @@ void *epoll_init(struct event_loop *eventLoop) {
         error(1, errno, "epoll create failed");
     }
 
-    epollDispatcherData->events = calloc(MAXEVENTS, sizeof(struct acceptor));
+    epollDispatcherData->events = calloc(MAXEVENTS, sizeof(struct epoll_event));
 
     return epollDispatcherData;
 }

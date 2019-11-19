@@ -95,7 +95,6 @@ int event_loop_handle_pending_add(struct event_loop *eventLoop, int fd, struct c
 
     //第一次创建，增加
     if ((map)->entries[fd] == NULL) {
-        map->entries[fd] = calloc(1, sizeof(struct channel *));
         map->entries[fd] = channel;
         //add channel
         struct event_dispatcher *eventDispatcher = eventLoop->eventDispatcher;
