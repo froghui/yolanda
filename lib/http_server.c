@@ -65,7 +65,7 @@ int parse_http_request(struct buffer *input, struct http_request *httpRequest) {
                     strncpy(key, start, colon - start);
                     key[colon - start] = '\0';
                     char *value = malloc(crlf - colon - 2 + 1);
-                    strncpy(value, colon + 1, crlf - colon - 2);
+                    strncpy(value, colon + 2, crlf - colon - 2);
                     value[crlf - colon - 2] = '\0';
 
                     http_request_add_header(httpRequest, key, value);
