@@ -140,7 +140,7 @@ struct http_server *http_server_new(struct event_loop *eventLoop, int port,
     struct http_server *httpServer = malloc(sizeof(struct http_server));
     httpServer->requestCallback = requestCallback;
     //初始化acceptor
-    struct acceptor *acceptor = acceptor_init(SERV_PORT);
+    struct acceptor *acceptor = acceptor_init(port);
 
     httpServer->tcpServer = tcp_server_init(eventLoop, acceptor, http_onConnectionCompleted, http_onMessage,
                                             http_onWriteCompleted,

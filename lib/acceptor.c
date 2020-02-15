@@ -22,7 +22,7 @@ struct acceptor *acceptor_init(int port) {
         error(1, errno, "bind failed ");
     }
 
-    int rt2 = listen(acceptor1->listen_fd, LISTENQ);
+    int rt2 = listen(acceptor1->listen_fd, acceptor1->listen_port);
     if (rt2 < 0) {
         error(1, errno, "listen failed ");
     }
