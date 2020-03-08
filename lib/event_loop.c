@@ -228,7 +228,7 @@ struct event_loop *event_loop_init_with_name(char *thread_name) {
     eventLoop->pending_tail = NULL;
 
     struct channel *channel = channel_new(eventLoop->socketPair[1], EVENT_READ, handleWakeup, NULL, eventLoop);
-    event_loop_add_channel_event(eventLoop, eventLoop->socketPair[0], channel);
+    event_loop_add_channel_event(eventLoop, eventLoop->socketPair[1], channel);
 
     return eventLoop;
 }
