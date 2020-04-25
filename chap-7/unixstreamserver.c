@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
         printf("Receive: %s", buf);
 
         char send_line[MAXLINE];
+        bzero(send_line, MAXLINE);
         sprintf(send_line, "Hi, %s", buf);
 
         int nbytes = sizeof(send_line);
