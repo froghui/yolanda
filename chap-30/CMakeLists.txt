@@ -1,2 +1,5 @@
 add_executable(aio01 aio01.c)
 target_link_libraries(aio01 yolanda)
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    target_link_libraries(aio01 rt)
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")

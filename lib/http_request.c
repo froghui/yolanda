@@ -75,6 +75,7 @@ int http_request_close_connection(struct http_request *httpRequest) {
 
     if (httpRequest->version != NULL &&
         strncmp(httpRequest->version, HTTP10, strlen(HTTP10)) == 0 &&
+        connection != NULL &&
         strncmp(connection, KEEP_ALIVE, strlen(KEEP_ALIVE)) == 1) {
         return 1;
     }

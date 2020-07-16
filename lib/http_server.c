@@ -18,7 +18,7 @@ int process_status_line(char *start, char *end, struct http_request *httpRequest
     int method_size = space - start;
     httpRequest->method = malloc(method_size + 1);
     strncpy(httpRequest->method, start, space - start);
-    httpRequest->method[method_size + 1] = '\0';
+    httpRequest->method[method_size] = '\0';
 
     //url
     start = space + 1;
@@ -27,13 +27,13 @@ int process_status_line(char *start, char *end, struct http_request *httpRequest
     int url_size = space - start;
     httpRequest->url = malloc(url_size + 1);
     strncpy(httpRequest->url, start, space - start);
-    httpRequest->url[url_size + 1] = '\0';
+    httpRequest->url[url_size] = '\0';
 
     //version
     start = space + 1;
     httpRequest->version = malloc(end - start + 1);
     strncpy(httpRequest->version, start, end - start);
-    httpRequest->version[end - start + 1] = '\0';
+    httpRequest->version[end - start] = '\0';
     assert(space != NULL);
     return size;
 }
