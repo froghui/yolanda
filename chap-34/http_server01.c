@@ -6,22 +6,20 @@
 //数据读到buffer之后的callback
 int onRequest(struct http_request *httpRequest, struct http_response *httpResponse) {
     char *url = httpRequest->url;
-    char *question = memmem(url, strlen(url), "?", 1);
-    char *path = NULL;
+    char *question = strstr(url, "?");
+    int url_len;
     if (question != NULL) {
-        path = malloc(question - url);
-        strncpy(path, url, question - url);
+        url_len = question - url;
     } else {
-        path = malloc(strlen(url));
-        strncpy(path, url, strlen(url));
+        url_len = strlen(url);
     }
 
-    if (strcmp(path, "/") == 0) {
+    if (strncmp(url, "/", url_len) == 0) {
         httpResponse->statusCode = OK;
         httpResponse->statusMessage = "OK";
         httpResponse->contentType = "text/html";
         httpResponse->body = "<html><head><title>This is network programming</title></head><body><h1>Hello, network programming</h1></body></html>";
-    } else if (strcmp(path, "/network") == 0) {
+    } else if (strncmp(url, "/network", url_len) == 0) {
         httpResponse->statusCode = OK;
         httpResponse->statusMessage = "OK";
         httpResponse->contentType = "text/plain";

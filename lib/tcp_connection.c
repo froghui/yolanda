@@ -6,6 +6,9 @@ int handle_connection_closed(struct tcp_connection *tcpConnection) {
     struct event_loop *eventLoop = tcpConnection->eventLoop;
     struct channel *channel = tcpConnection->channel;
     event_loop_remove_channel_event(eventLoop, channel->fd, channel);
+    if(close(channel->fd) < 0) {
+        yolanda_msgx("close fd %d failed, errno : %d", channel->fd, errno);
+    }
     if (tcpConnection->connectionClosedCallBack != NULL) {
         tcpConnection->connectionClosedCallBack(tcpConnection);
     }
