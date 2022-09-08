@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
         }
 
         printf("now sending %s\n", send_line);
-        size_t rt = sendto(socket_fd, send_line, strlen(send_line), 0, (struct sockaddr *) &server_addr, server_len);
+        ssize_t rt = sendto(socket_fd, send_line, strlen(send_line), 0, (struct sockaddr *) &server_addr, server_len);
         if (rt < 0) {
             error(1, errno, "send failed ");
         }
