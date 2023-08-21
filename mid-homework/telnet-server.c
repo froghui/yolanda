@@ -9,7 +9,7 @@ static void sig_int(int signo) {
 
 char *run_cmd(char *cmd) {
     char *data = malloc(16384);
-    bzero(data, sizeof(data));
+    bzero(data, 16384);
     FILE *fdp;
     const int max_buffer = 256;
     char buffer[max_buffer];
