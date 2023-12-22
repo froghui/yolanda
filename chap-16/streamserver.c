@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
     socklen_t client_len = sizeof(client_addr);
 
     if ((connfd = accept(listenfd, (struct sockaddr *) &client_addr, &client_len)) < 0) {
-        error(1, errno, "bind failed ");
+        error(1, errno, "accept failed ");
     }
 
     char buf[128];
